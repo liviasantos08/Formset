@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="columns is-centered has-text-centered">
+    <div class="column is-half">
+        <div class="card has-background-white-ter">
+            <h1 class="title is-3"></h1>
+        </div>
+    </div>
+</div>
+<form action="#" method="post">{% csrf_token %}
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">
+                All Orders / Change Order Status &nbsp;<button class="button is-rounded is-info">
+                    <a href="{% url 'form' %}" class="has-text-white">Create Invoice</a></button>
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+
+                <table class="table is-fullwidth is-bordered is-hoverable is-striped">
+                    <tbody>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>NOME</th>
+                                <th>TELEFONE</th>
+                                <th>ENDERECO</th>
+                                <th>PAGAMENTO</th>
+                                <th>TOTAL</th>
+                                <th>View</th>
+                                <th>DOWNLOAD</th>
+
+                            </tr>
+                        </thead>
+                        {% for pai in pais %}
+                        <tr>
+                            <td><input class="checkbox" type="checkbox" value="{{pai.id}}" name="pai_id" size="1" />
+                            </td>
+                            <td width="1%">#{{pai.id}}</td>
+                            <td width="9%">{{pai.nome}}</td>
+                            <td> {{pai.telefone}}</td>
+                            <td> {{pai.endereco}} </td>
+                            <td> {{pai.pagamento}} </td>
+                            <td>{{pai.total}}</td>
+                            <td width="1%"><a href="{% url 'gerapdf' id=pai.id %}">
+                                <div class="button is-small is-info">View</div>
+                            </a></td>
+                            <td width="1%"><a href="#">Download</a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div><br /><br /><br />
+    <div class="card has-background-white-ter">
+        <header class="card-header">
+            <p class="card-header-title">
+                Change Order Status
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="select is-rounded">
+                <select id="status" name="status">
+                    <option value="1">Paid</option>
+                    <option value="0">Not Paid</option>
+                </select>
+            </div>
+            <input class="button  is-info is-rounded" type="submit" class="btn" value="Change Status" name="mybtn">
+        </div>
+    </div>
+</form>
+
+{% endblock content %}
